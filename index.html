@@ -8,11 +8,25 @@
 </head>
 <body>
   <h1>🌍 Country Guide Finder</h1>
-  <input type="text" id="countryInput" placeholder="Enter country name..." />
-  <button onclick="getCountryData()">🔎 Search</button>
+  <input type="text" id="countryInput" placeholder="Enter country name..." list="countryList" />
+  <datalist id="countryList"></datalist>
+  <button onclick="getCountryData()">⌖ Search</button>
 
   <div id="result"></div>
 
   <script src="script.js"></script>
+  <script>
+    // Fetch country names for autocomplete
+    fetch('https://restcountries.com/v3.1/all')
+      .then(res => res.json())
+      .then(data => {
+        const datalist = document.getElementById('countryList');
+        data.forEach(country => {
+          const option = document.createElement('option');
+          option.value = country.name.common;
+          datalist.appendChild(option);
+        });
+      });
+  </script>
 </body>
 </html>
